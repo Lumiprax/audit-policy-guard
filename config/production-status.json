@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "environment": "production",
+  "deployment": "COMPLETE",
+  "productionVersion": "2.1.0",
+  "installation": "NOT_INSTALLED_BY_DESIGN",
+  "productionInstallValidationRequired": false,
+  "runsOnAtlassianEligible": true,
+  "privacySchemaVersion": 2,
+  "currentDeploymentContainsPrivacySchemaV2": true,
+  "marketplaceApprovalRequiredBeforeInstall": true,
+  "runtimeValidation": "NOT_APPLICABLE_PRE_MARKETPLACE",
+  "verifiedAt": "2026-09-07T04:03:18.384Z"
+}

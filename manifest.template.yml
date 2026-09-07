@@ -12,6 +12,8 @@ modules:
     - key: audit-policy-guard-view-monitor
       function: audit-monitor
       interval: fiveMinute
+      filter:
+        appIsLicensed: true
   function:
     - key: resolver
       handler: index.handler

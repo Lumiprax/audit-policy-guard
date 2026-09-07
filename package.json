@@ -5,7 +5,9 @@
   "description": "Jira admins need continuous policy-focused monitoring and longer-lived evidence for security-relevant configuration changes without manually reviewing the audit log.",
   "scripts": {
     "test": "node --test test/*.test.js",
-    "check:scaffold": "node test/scaffold-check.js"
+    "check:scaffold": "node test/scaffold-check.js",
+    "release:check": "node scripts/release-readiness.js",
+    "release:check:marketplace": "node scripts/release-readiness.js --marketplace"
   },
   "dependencies": {
     "@forge/bridge": "^6.3.1",

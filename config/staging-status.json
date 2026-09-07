@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "environment": "staging",
+  "site": "one-atlas-ugga.atlassian.net",
+  "deployment": "COMPLETE",
+  "installation": "COMPLETE",
+  "runtimeValidation": "PASS",
+  "lastScanStatus": "PASS",
+  "lastScanProcessed": 0,
+  "lastScanFindings": 0,
+  "privacyMigration": "PASS",
+  "purgedLegacyFindings": 17,
+  "forgeLint": "PASS",
+  "runsOnAtlassianEligible": true,
+  "licenseSimulation": "TRIAL"
+}

@@ -10,7 +10,6 @@
   "proposedWorkflow": "Poll Jira audit records on a five-minute schedule, evaluate high-risk admin and configuration events against policy packs, retain governed evidence inside Forge storage, and surface an admin risk queue.",
   "requiredScopes": [
     "read:audit-log:jira",
-    "read:user:jira",
     "storage:app"
   ],
   "additionalModules": [

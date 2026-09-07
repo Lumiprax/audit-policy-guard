@@ -9,8 +9,8 @@ function Finding({finding}) {
   return (
     <Stack space="space.050">
       <Lozenge appearance={appearance(finding.severity)}>{finding.severity}</Lozenge>
-      <Heading size="small">{finding.summary||'Audit policy finding'}</Heading>
-      <Text>{finding.category||'Configuration change'} · {finding.created||'Time unavailable'}</Text>
+      <Heading size="small">{finding.label||'Audit policy finding'}</Heading>
+      <Text>{finding.created||'Time unavailable'}</Text>
       <Text>Policies: {(finding.policyIds||[]).join(', ')||'policy match'}</Text>
     </Stack>
   );
@@ -20,6 +20,7 @@ const App=()=>{
   const [data,setData]=useState(null);
   const [busy,setBusy]=useState(false);
   const [error,setError]=useState('');
+  const [confirmDelete,setConfirmDelete]=useState(false);
   const load=async()=>{
     try { setData(await invoke('getDashboard')); setError(''); }
     catch { setError('Admin access is required to view audit findings.'); }
@@ -30,17 +31,28 @@ const App=()=>{
     try {
       const result=await invoke('runScan');
       if(result?.status==='FAIL') setError(`Scan failed: ${result.errorCode||'AUDIT_SCAN_FAILED'}`);
+      if(result?.status==='LICENSE_REQUIRED') setError('An active Marketplace license is required to run scans.');
       await load();
     } catch { setError('The audit scan could not be completed.'); }
     finally { setBusy(false); }
   };
+  const clear=async()=>{
+    if(!confirmDelete) { setConfirmDelete(true); return; }
+    setBusy(true); setError('');
+    try { await invoke('clearData'); setConfirmDelete(false); await load(); }
+    catch { setError('Stored findings could not be deleted.'); }
+    finally { setBusy(false); }
+  };
   const status=data?.status?.status||'NOT_SCANNED';
+  const licensed=data?.licensed!==false;
   return (
     <Stack space="space.200">
       <Heading size="large">Audit Policy Guard</Heading>
       <Text>Policy-focused monitoring for security-relevant Jira administration and configuration changes.</Text>
-      <Lozenge appearance={status==='PASS'?'success':status==='FAIL'?'removed':'inprogress'}>{status}</Lozenge>
-      <Button appearance="primary" onClick={scan} isDisabled={busy}>{busy?'Scanning…':'Run scan now'}</Button>
+      <Lozenge appearance={status==='PASS'?'success':status==='FAIL'||status==='LICENSE_REQUIRED'?'removed':'inprogress'}>{status}</Lozenge>
+      {!licensed?<Text>An active Marketplace license is required to run Audit Policy Guard.</Text>:null}
+      <Button appearance="primary" onClick={scan} isDisabled={busy||!licensed}>{busy?'Scanning…':'Run scan now'}</Button>
+      <Button appearance={confirmDelete?'danger':'default'} onClick={clear} isDisabled={busy}>{confirmDelete?'Confirm delete stored data':'Delete stored findings'}</Button>
       {error?<Text>{error}</Text>:null}
       <Heading size="medium">Scan health</Heading>
       <Text>Processed: {data?.status?.processed??0} · Findings: {data?.status?.findings??0} · Trigger: {data?.status?.initiatedBy||'not run'}</Text>

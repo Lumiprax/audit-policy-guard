@@ -12,6 +12,7 @@ test('manifest is read-only, admin-gated and Atlassian-hosted',()=>{
   for(const scope of ['read:audit-log:jira','read:user:jira','read:permission:jira','storage:app']) assert.match(manifest,new RegExp(scope.replace(':','\\:')));
   assert.match(manifest,/hasGlobalPermission: ADMINISTER/);
   assert.match(manifest,/interval: fiveMinute/);
+  assert.match(manifest,/appIsLicensed: true/);
   assert.doesNotMatch(manifest,/write:|delete:|manage:|external:/);
 });
 
@@ -22,5 +23,10 @@ test('audit service stores findings for at most one year and never persists remo
   assert.match(source,/api\.asApp\(\)\.requestJira/);
   assert.match(source,/api\.asUser\(\)\.requestJira/);
   assert.doesNotMatch(source,/api\.asUser\(accountId\)/);
+  assert.doesNotMatch(policy,/authorAccountId\s*:/);
   assert.doesNotMatch(policy,/remoteAddress\s*:/);
+  assert.doesNotMatch(policy,/changedFrom\s*:/);
+  assert.doesNotMatch(policy,/changedTo\s*:/);
+  assert.match(source,/DATA_SCHEMA_VERSION=2/);
+  assert.match(source,/clearStoredData/);
 });

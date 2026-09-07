@@ -30,7 +30,7 @@ Payment model: Paid via Atlassian. Initial research-backed target is approximate
 ## Scope explanations
 
 - `read:audit-log:jira`: required to read Jira audit records for policy evaluation.
-- `read:user:jira`: required for actor/user context exposed by audit records.
+- `read:user:jira`: required by Atlassian as part of the granular scope set for the audit-record endpoint; Audit Policy Guard does not persist actor/user fields.
 - `read:permission:jira`: required to verify that the current user has Jira administration permission before returning findings or starting a manual scan.
 - `storage:app`: required to retain app-owned findings and scan state in Atlassian Forge KVS.
 

@@ -13,7 +13,7 @@ Scheduled scans run `asApp()` because no user session exists. They perform read-
 ## Scopes
 
 - `read:audit-log:jira` — read Jira audit events.
-- `read:user:jira` — support audit actor/user context where exposed.
+- `read:user:jira` — required by Atlassian for the granular audit-record scope set; actor/user fields are processed transiently and not persisted.
 - `read:permission:jira` — verify Jira administrator authorization.
 - `storage:app` — retain findings and scan state in Forge KVS.
 

@@ -6,6 +6,8 @@ const {POLICY_RULES,classifyAuditRecord,normalizeAuditRecord,findingKey,maxCreat
 
 const STATE_KEY='apg:scan-state';
 const STATUS_KEY='apg:scan-status';
+const DATA_SCHEMA_KEY='apg:data-schema';
+const DATA_SCHEMA_VERSION=2;
 const FINDING_PREFIX='apg:finding:';
 const FINDING_RETENTION_DAYS=365;
 const STATUS_RETENTION_DAYS=30;
@@ -61,6 +63,31 @@ function pageHasMore(page,nextOffset) {
   return Number.isFinite(Number(page?.total))?nextOffset<Number(page.total):true;
 }
 
+async function purgeFindings(maxPages=50) {
+  let deleted=0;
+  for(let page=0;page<maxPages;page+=1) {
+    const result=await kvs.query().where('key',WhereConditions.beginsWith(FINDING_PREFIX)).limit(100).getMany();
+    const rows=Array.isArray(result?.results)?result.results:[];
+    for(const item of rows) { if(item?.key) { await kvs.delete(item.key); deleted+=1; } }
+    if(rows.length<100) break;
+  }
+  return deleted;
+}
+async function ensureDataSchema() {
+  const current=Number(await kvs.get(DATA_SCHEMA_KEY)||0);
+  if(current>=DATA_SCHEMA_VERSION) return {migrated:false,deleted:0};
+  const deleted=await purgeFindings();
+  await kvs.set(DATA_SCHEMA_KEY,DATA_SCHEMA_VERSION);
+  return {migrated:true,deleted};
+}
+async function clearStoredData() {
+  const deleted=await purgeFindings();
+  await kvs.delete(STATE_KEY);
+  await kvs.delete(STATUS_KEY);
+  await kvs.set(DATA_SCHEMA_KEY,DATA_SCHEMA_VERSION);
+  return {status:'PASS',deleted};
+}
+
 async function saveFinding(record,classification) {
   const finding=normalizeAuditRecord(record,classification);
   await kvs.set(findingKey(record),finding,{ttl:{unit:'DAYS',value:FINDING_RETENTION_DAYS}});
@@ -68,6 +95,7 @@ async function saveFinding(record,classification) {
 }
 async function runAuditScan({initiatedBy='SCHEDULED'}={}) {
   const startedAt=new Date().toISOString();
+  const migration=await ensureDataSchema();
   const previous=await kvs.get(STATE_KEY)||{};
   const windowStart=previous.windowStart||previous.lastSeen||initialWindow();
   let offset=Number.isFinite(Number(previous.pendingOffset))?Number(previous.pendingOffset):0;
@@ -93,7 +121,7 @@ async function runAuditScan({initiatedBy='SCHEDULED'}={}) {
       ?{windowStart,pendingOffset:offset,maxCreated:newest,lastSeen:previous.lastSeen||null}
       :{lastSeen:nextInstant(total?newest:startedAt),pendingOffset:0,windowStart:null,maxCreated:null};
     await kvs.set(STATE_KEY,nextState);
-    const result={status:partial?'PARTIAL':'PASS',initiatedBy,processed,findings,total,pages,windowStart,nextOffset:partial?offset:0,completedAt:new Date().toISOString()};
+    const result={status:partial?'PARTIAL':'PASS',initiatedBy,processed,findings,total,pages,windowStart,nextOffset:partial?offset:0,purgedLegacyFindings:migration.deleted,completedAt:new Date().toISOString()};
     await saveStatus(result);
     return result;
   } catch(error) {
@@ -114,8 +142,8 @@ async function getDashboard() {
     findings,
     retentionDays:FINDING_RETENTION_DAYS,
     policies:POLICY_RULES.map(({id,label,description,severity})=>({id,label,description,severity})),
-    limitations:['Only events exposed by the Jira audit records API can be evaluated.','Findings are retained in Atlassian-hosted Forge storage for up to 365 days.','No audit data is sent to an external service.'],
+    limitations:['Only events exposed by the Jira audit records API can be evaluated.','Stored findings contain generic policy metadata only; raw audit payloads and user identifiers are not retained.','Findings are retained in Atlassian-hosted Forge storage for up to 365 days.','No audit data is sent to an external service.'],
   };
 }
 
-module.exports={STATE_KEY,STATUS_KEY,FINDING_PREFIX,FINDING_RETENTION_DAYS,PAGE_SIZE,MAX_PAGES_PER_INVOCATION,pageHasMore,assertJiraAdmin,fetchAuditPage,runAuditScan,getDashboard};
+module.exports={STATE_KEY,STATUS_KEY,DATA_SCHEMA_KEY,DATA_SCHEMA_VERSION,FINDING_PREFIX,FINDING_RETENTION_DAYS,PAGE_SIZE,MAX_PAGES_PER_INVOCATION,pageHasMore,assertJiraAdmin,fetchAuditPage,purgeFindings,ensureDataSchema,clearStoredData,runAuditScan,getDashboard};

@@ -6,7 +6,6 @@
   "supportedModule": true,
   "requiredScopes": [
     "read:audit-log:jira",
-    "read:user:jira",
     "storage:app"
   ],
   "riskyScopes": [],
