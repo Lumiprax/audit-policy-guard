@@ -1,0 +1,18 @@
+{
+  "name": "atlassian-audit-policy-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Jira admins need continuous policy-focused monitoring and longer-lived evidence for security-relevant configuration changes without manually reviewing the audit log.",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "check:scaffold": "node test/scaffold-check.js"
+  },
+  "dependencies": {
+    "@forge/bridge": "^6.3.1",
+    "@forge/react": "^12.1.3",
+    "@forge/resolver": "^2.0.0",
+    "react": "^18.3.1",
+    "@forge/api": "^8.0.5",
+    "@forge/kvs": "^2.0.5"
+  }
+}

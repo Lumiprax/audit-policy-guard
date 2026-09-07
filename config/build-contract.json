@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "platform": "atlassian",
+  "slug": "audit-policy-guard",
+  "workingTitle": "Audit Policy Guard",
+  "sourceScore": 90,
+  "sourceDecision": "BUILD_LEADER",
+  "buildEligibility": "READY_FOR_BUILD",
+  "targetProduct": "Jira",
+  "moduleType": "jira:adminPage",
+  "additionalModules": [
+    "scheduledTrigger"
+  ],
+  "requiredScopes": [
+    "read:audit-log:jira",
+    "read:user:jira",
+    "storage:app"
+  ],
+  "billing": {
+    "model": "STANDARD_ALL_USERS",
+    "monthlyPricePerUserUSD": 0.75,
+    "licensingEnabled": true
+  },
+  "boundaries": {
+    "deployment": false,
+    "installation": false,
+    "marketplaceSubmission": false,
+    "legalAcceptance": false,
+    "externalEgress": false
+  },
+  "requiredValidation": [
+    "workspace structure",
+    "manifest template",
+    "licensing enabled",
+    "Node.js 24 runtime",
+    "supported Forge module",
+    "no release commands"
+  ],
+  "createdAt": "2026-09-07T00:17:37.368Z"
+}

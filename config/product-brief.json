@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "platform": "atlassian",
+  "candidateId": "atl-candidate-569957e5236ddf458489",
+  "slug": "audit-policy-guard",
+  "workingTitle": "Audit Policy Guard",
+  "targetProduct": "Jira",
+  "moduleType": "jira:adminPage",
+  "problem": "Jira admins need continuous policy-focused monitoring and longer-lived evidence for security-relevant configuration changes without manually reviewing the audit log.",
+  "proposedWorkflow": "Poll Jira audit records on a five-minute schedule, evaluate high-risk admin and configuration events against policy packs, retain governed evidence inside Forge storage, and surface an admin risk queue.",
+  "requiredScopes": [
+    "read:audit-log:jira",
+    "read:user:jira",
+    "storage:app"
+  ],
+  "additionalModules": [
+    "scheduledTrigger"
+  ],
+  "score": 90,
+  "decision": "BUILD_LEADER",
+  "buildEligibility": "READY_FOR_BUILD",
+  "hypothesis": true,
+  "evidenceIds": [
+    "atl-257260e2255f7aeae9cd",
+    "atl-d1f5dbe0a60b4639143e",
+    "atl-545c881dbf9269e37259",
+    "atl-4f1f66e4c22d9bb20a9b",
+    "atl-d35f016b9728fd2e54c2",
+    "atl-a40fb9db5e7420912890",
+    "atl-86192209208903af8234",
+    "atl-02c993a5d112f5e3d53b",
+    "atl-18251b54df8741a3e551",
+    "atl-92e7f638819d9705a69e",
+    "atl-7e97bb3e979da47df9ce",
+    "atl-add2c834ccc3716ad302",
+    "atl-fbb4ac2fee2d3aaba766",
+    "atl-ac76f4b0c2948f49f7fb",
+    "atl-4f406ec1153553c5e990",
+    "atl-0ce588a1700b11156435",
+    "atl-aa35461f5eff15319561",
+    "atl-8d5cbf0098a7fad0bc6e"
+  ],
+  "governance": "This product brief is research output. Only a scorecard marked READY_FOR_BUILD may enter the isolated Atlassian build pipeline."
+}

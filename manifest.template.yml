@@ -1,0 +1,37 @@
+modules:
+  jira:adminPage:
+    - key: audit-policy-guard-view
+      resource: main
+      resolver:
+        function: resolver
+      render: native
+      title: "Audit Policy Guard"
+      displayConditions:
+        hasGlobalPermission: ADMINISTER
+  scheduledTrigger:
+    - key: audit-policy-guard-view-monitor
+      function: audit-monitor
+      interval: fiveMinute
+  function:
+    - key: resolver
+      handler: index.handler
+    - key: audit-monitor
+      handler: index.auditMonitor
+      timeoutSeconds: 120
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+app:
+  id: "__FORGE_APP_ID__"
+  licensing:
+    enabled: true
+  runtime:
+    name: nodejs24.x
+    memoryMB: 256
+    architecture: arm64
+permissions:
+  scopes:
+    - "read:audit-log:jira"
+    - "read:user:jira"
+    - "read:permission:jira"
+    - "storage:app"

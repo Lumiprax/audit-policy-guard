@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "currency": "USD",
+  "billingModel": "STANDARD_ALL_USERS",
+  "status": "EVIDENCE_BACKED",
+  "proposedMonthlyPricePerUserUSD": 0.75,
+  "marketPriceRange": {
+    "low": 0.4,
+    "median": 0.83,
+    "high": 1.05
+  },
+  "evidence": [
+    {
+      "sourceUrl": "https://marketplace.atlassian.com/apps/1238230",
+      "monthlyPricePerUserUSD": 0.4
+    },
+    {
+      "sourceUrl": "https://marketplace.atlassian.com/apps/3948220256",
+      "monthlyPricePerUserUSD": 0.45
+    },
+    {
+      "sourceUrl": "https://marketplace.atlassian.com/apps/173332844",
+      "monthlyPricePerUserUSD": 0.83
+    },
+    {
+      "sourceUrl": "https://marketplace.atlassian.com/apps/1512782585",
+      "monthlyPricePerUserUSD": 1
+    },
+    {
+      "sourceUrl": "https://marketplace.atlassian.com/apps/1235591",
+      "monthlyPricePerUserUSD": 1.05
+    }
+  ],
+  "sourceOfTruth": "https://developer.atlassian.com/platform/forge/licensing-overview/",
+  "note": "Standard Forge billing is modeled because user-based billing remains EAP for Marketplace publishing as of the policy evidence used by this branch."
+}

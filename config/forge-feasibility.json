@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "status": "SUPPORTED",
+  "targetProduct": "Jira",
+  "moduleType": "jira:adminPage",
+  "supportedModule": true,
+  "requiredScopes": [
+    "read:audit-log:jira",
+    "read:user:jira",
+    "storage:app"
+  ],
+  "riskyScopes": [],
+  "externalEgressRequired": false,
+  "capabilityEvidence": [
+    {
+      "evidenceId": "atl-257260e2255f7aeae9cd",
+      "title": "Jira audit records API for Forge",
+      "sourceUrl": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-audit-records/",
+      "verifiedAt": "2026-09-07T00:16:16.815Z"
+    },
+    {
+      "evidenceId": "atl-d1f5dbe0a60b4639143e",
+      "title": "Scheduled trigger",
+      "sourceUrl": "https://developer.atlassian.com/platform/forge/manifest-reference/modules/scheduled-trigger/",
+      "verifiedAt": "2026-09-07T00:16:17.913Z"
+    }
+  ],
+  "governance": "Forge feasibility requires at least one verified official capability source and a supported module. Scope declarations remain subject to endpoint-level verification and forge lint before deployment."
+}

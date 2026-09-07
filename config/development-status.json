@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "platform": "atlassian",
+  "app": "Audit Policy Guard",
+  "forgeAppId": "ari:cloud:ecosystem::app/2d86526b-807d-40bd-b424-b758b88c1a36",
+  "developerSpace": "SAGE Money Factory",
+  "site": "sage-atlassian-dev.atlassian.net",
+  "environment": "development",
+  "registration": "COMPLETE",
+  "deployment": "COMPLETE",
+  "installation": "COMPLETE",
+  "forgeLint": "PASS",
+  "productTests": "9/9 PASS",
+  "factoryRegression": "808/808 PASS",
+  "runsOnAtlassianEligible": true,
+  "runtimeValidation": "PENDING",
+  "productionDeployment": "NOT_STARTED",
+  "marketplaceSubmission": "NOT_STARTED",
+  "developmentVersion": "2.2.0"
+}
