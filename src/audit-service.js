@@ -2,7 +2,7 @@
 const api=require('@forge/api');
 const {route}=api;
 const {kvs,WhereConditions}=require('@forge/kvs');
-const {classifyAuditRecord,normalizeAuditRecord,findingKey,maxCreated}=require('./policy-engine');
+const {POLICY_RULES,classifyAuditRecord,normalizeAuditRecord,findingKey,maxCreated}=require('./policy-engine');
 
 const STATE_KEY='apg:scan-state';
 const STATUS_KEY='apg:scan-status';
@@ -47,8 +47,18 @@ async function fetchAuditPage(from,offset) {
   const body=await response.json();
   return {
     records:Array.isArray(body?.records)?body.records:[],
-    total:Number.isFinite(Number(body?.total))?Number(body.total):0,
+    total:Number.isFinite(Number(body?.total))?Number(body.total):null,
+    limit:Number.isFinite(Number(body?.limit))&&Number(body.limit)>0?Number(body.limit):PAGE_SIZE,
+    offset:Number.isFinite(Number(body?.offset))?Number(body.offset):offset,
   };
+}
+
+
+function pageHasMore(page,nextOffset) {
+  if(!Array.isArray(page?.records)||page.records.length===0) return false;
+  const limit=Number.isFinite(Number(page?.limit))&&Number(page.limit)>0?Number(page.limit):PAGE_SIZE;
+  if(page.records.length<limit) return false;
+  return Number.isFinite(Number(page?.total))?nextOffset<Number(page.total):true;
 }
 
 async function saveFinding(record,classification) {
@@ -62,7 +72,7 @@ async function runAuditScan({initiatedBy='SCHEDULED'}={}) {
   const windowStart=previous.windowStart||previous.lastSeen||initialWindow();
   let offset=Number.isFinite(Number(previous.pendingOffset))?Number(previous.pendingOffset):0;
   let newest=previous.maxCreated||previous.lastSeen||windowStart;
-  let processed=0,findings=0,total=0,pages=0;
+  let processed=0,findings=0,total=null,pages=0,hasMore=false;
   try {
     while(pages<MAX_PAGES_PER_INVOCATION) {
       const page=await fetchAuditPage(windowStart,offset);
@@ -75,9 +85,10 @@ async function runAuditScan({initiatedBy='SCHEDULED'}={}) {
       }
       offset+=page.records.length;
       pages+=1;
-      if(!page.records.length||offset>=total) break;
+      hasMore=pageHasMore(page,offset);
+      if(!hasMore) break;
     }
-    const partial=offset<total;
+    const partial=hasMore&&pages>=MAX_PAGES_PER_INVOCATION;
     const nextState=partial
       ?{windowStart,pendingOffset:offset,maxCreated:newest,lastSeen:previous.lastSeen||null}
       :{lastSeen:nextInstant(total?newest:startedAt),pendingOffset:0,windowStart:null,maxCreated:null};
@@ -102,8 +113,9 @@ async function getDashboard() {
     status:status||{status:'NOT_SCANNED'},
     findings,
     retentionDays:FINDING_RETENTION_DAYS,
+    policies:POLICY_RULES.map(({id,label,description,severity})=>({id,label,description,severity})),
     limitations:['Only events exposed by the Jira audit records API can be evaluated.','Findings are retained in Atlassian-hosted Forge storage for up to 365 days.','No audit data is sent to an external service.'],
   };
 }
 
-module.exports={STATE_KEY,STATUS_KEY,FINDING_PREFIX,FINDING_RETENTION_DAYS,PAGE_SIZE,MAX_PAGES_PER_INVOCATION,assertJiraAdmin,fetchAuditPage,runAuditScan,getDashboard};
+module.exports={STATE_KEY,STATUS_KEY,FINDING_PREFIX,FINDING_RETENTION_DAYS,PAGE_SIZE,MAX_PAGES_PER_INVOCATION,pageHasMore,assertJiraAdmin,fetchAuditPage,runAuditScan,getDashboard};

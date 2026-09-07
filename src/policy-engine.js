@@ -2,11 +2,11 @@
 const crypto=require('node:crypto');
 
 const POLICY_RULES=Object.freeze([
-  {id:'permission-access-change',severity:'HIGH',rx:/\b(permission|security level|role|group access|global permission)\b/i},
-  {id:'user-admin-change',severity:'HIGH',rx:/\b(user (created|deleted|deactivated|activated)|added to group|removed from group|group management)\b/i},
-  {id:'destructive-config-change',severity:'HIGH',rx:/\b(deleted|removed|disabled)\b/i},
-  {id:'workflow-config-change',severity:'MEDIUM',rx:/\b(workflow|scheme|custom field|screen|notification|configuration)\b/i},
-  {id:'integration-change',severity:'MEDIUM',rx:/\b(webhook|integration|connected app|app configuration)\b/i},
+  {id:'permission-access-change',label:'Permission and access changes',description:'Permission, role, security level, group access, and global permission changes.',severity:'HIGH',rx:/\b(permission|security level|role|group access|global permission)\b/i},
+  {id:'user-admin-change',label:'User administration changes',description:'User lifecycle and group-membership administration events.',severity:'HIGH',rx:/\b(user (created|deleted|deactivated|activated)|added to group|removed from group|group management)\b/i},
+  {id:'destructive-config-change',label:'Destructive configuration changes',description:'Deletion, removal, and disablement events affecting Jira configuration.',severity:'HIGH',rx:/\b(deleted|removed|disabled)\b/i},
+  {id:'workflow-config-change',label:'Workflow and configuration changes',description:'Workflow, scheme, field, screen, notification, and configuration changes.',severity:'MEDIUM',rx:/\b(workflow|scheme|custom field|screen|notification|configuration)\b/i},
+  {id:'integration-change',label:'Integration changes',description:'Webhook, connected-app, integration, and app-configuration events.',severity:'MEDIUM',rx:/\b(webhook|integration|connected app|app configuration)\b/i},
 ]);
 
 function clean(value,max=300) {

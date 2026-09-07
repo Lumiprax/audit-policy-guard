@@ -42,11 +42,21 @@ const App=()=>{
       <Lozenge appearance={status==='PASS'?'success':status==='FAIL'?'removed':'inprogress'}>{status}</Lozenge>
       <Button appearance="primary" onClick={scan} isDisabled={busy}>{busy?'Scanning…':'Run scan now'}</Button>
       {error?<Text>{error}</Text>:null}
+      <Heading size="medium">Scan health</Heading>
+      <Text>Processed: {data?.status?.processed??0} · Findings: {data?.status?.findings??0} · Trigger: {data?.status?.initiatedBy||'not run'}</Text>
+      <Text>Last completion: {data?.status?.completedAt||data?.status?.failedAt||'No scan has completed yet'}</Text>
       <Text>Automatic scans run every five minutes. Matched findings are retained in Forge storage for up to {data?.retentionDays||365} days.</Text>
       <Heading size="medium">Recent findings</Heading>
       {(data?.findings||[]).length
         ?data.findings.map((finding,index)=><Finding key={`${finding.sourceRecordId||'finding'}-${index}`} finding={finding}/>)
         :<Text>No policy findings have been stored yet.</Text>}
+      <Heading size="medium">Policy coverage</Heading>
+      {(data?.policies||[]).map((policy)=>(
+        <Stack key={policy.id} space="space.050">
+          <Text>{policy.label} · {policy.severity}</Text>
+          <Text>{policy.description}</Text>
+        </Stack>
+      ))}
       <Heading size="medium">Coverage and limits</Heading>
       {(data?.limitations||[]).map((item,index)=><Text key={`limit-${index}`}>{item}</Text>)}
     </Stack>
