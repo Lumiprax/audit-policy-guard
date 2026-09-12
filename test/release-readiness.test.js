@@ -22,6 +22,6 @@ test('Marketplace gate remains blocked by explicit account and publishing prereq
   assert.equal(result.status,3);
   assert.equal(result.report.marketplaceReady,false);
   assert.ok(result.report.accountBlockers.includes('PARTNER_AGREEMENT_REQUIRED'));
-  assert.ok(result.report.accountBlockers.includes('BUSINESS_DOMAIN_EMAIL_REQUIRED'));
+  assert.ok(!result.report.accountBlockers.includes('BUSINESS_DOMAIN_EMAIL_REQUIRED'));
   assert.ok(result.report.accountBlockers.includes('LISTING_ASSETS_REQUIRED'));
 });

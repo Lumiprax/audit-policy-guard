@@ -1,5 +1,10 @@
 # Audit Policy Guard Support
 
+**Support:** support@lumiprax.com  
+**Privacy:** privacy@lumiprax.com  
+**Security:** security@lumiprax.com  
+**Public support:** https://lumiprax.com/support
+
 ## Supported environments
 
 Audit Policy Guard supports Jira Cloud installations where the Jira audit records API is available and the installing administrator grants the declared Forge scopes.
@@ -19,4 +24,3 @@ Support covers installation, licensing, app configuration, scheduled scan health
 
 Safe diagnostic information includes Forge app version, installation/site identifier, scan status, error code, and timestamps. Customers should not send audit payloads, credentials, API tokens, or secrets unless specifically required through an approved secure channel.
 
-A public support URL and organization-domain support email must be configured before Marketplace submission.

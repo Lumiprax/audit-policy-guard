@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "paymentModel": "PAID_VIA_ATLASSIAN",
+  "billingModel": "STANDARD_ALL_USERS",
+  "editionStrategy": "STANDARD_ONLY_AT_LAUNCH",
+  "evaluation": {
+    "marketplaceManaged": true,
+    "minimumDays": 30
+  },
+  "currency": "USD",
+  "referenceMonthlyPricePerUserUSD": 0.75,
+  "annualPricingRule": "ATLASSIAN_CLOUD_ANNUAL_PRICING",
+  "pricingEvidenceStatus": "EVIDENCE_BACKED",
+  "portalPricingStatus": "NOT_CONFIGURED",
+  "userBasedBilling": {
+    "selected": false,
+    "reason": "EAP_NOT_PUBLISHABLE"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "currency": "USD",
+  "referencePricePerUserPerMonth": 0.75,
+  "referenceCustomerUsers": 250,
+  "grossMonthlyRevenuePerReferenceCustomer": 187.5,
+  "scenarios": [
+    {
+      "customers": 10,
+      "grossMRR": 1875,
+      "grossARRMonthlyBillingEquivalent": 22500,
+      "grossAnnualPlanRevenueAt10xMonthly": 18750
+    },
+    {
+      "customers": 50,
+      "grossMRR": 9375,
+      "grossARRMonthlyBillingEquivalent": 112500,
+      "grossAnnualPlanRevenueAt10xMonthly": 93750
+    },
+    {
+      "customers": 100,
+      "grossMRR": 18750,
+      "grossARRMonthlyBillingEquivalent": 225000,
+      "grossAnnualPlanRevenueAt10xMonthly": 187500
+    }
+  ],
+  "forgeRevenueShare": {
+    "incentive": "100_PERCENT_GROSS_UNTIL_PARTNER_REACHES_1M_LIFETIME_FORGE_REVENUE_IF_ELIGIBLE",
+    "partnerLifetimeForgeRevenueStatus": "UNKNOWN",
+    "standardShareAfterThresholdBefore2026_10_01": 0.84,
+    "standardShareAfterThresholdFrom2026_10_01": 0.83
+  },
+  "forgePlatformCost": {
+    "model": "CONSUMPTION_BASED_WITH_MONTHLY_FREE_ALLOWANCE",
+    "estimatedNetCost": null,
+    "reason": "Requires real production usage telemetry; no cost is fabricated before customer usage exists."
+  },
+  "governance": "Revenue scenarios are arithmetic illustrations based on the selected reference price and customer size, not sales forecasts."
+}

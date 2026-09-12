@@ -36,9 +36,13 @@ for(const file of ['docs/PRIVACY.md','docs/SECURITY.md','docs/SUPPORT.md','docs/
 if(!marketplace.partnerProfileCreated) account.push('PARTNER_PROFILE_REQUIRED');
 if(!marketplace.partnerAgreementAccepted) account.push('PARTNER_AGREEMENT_REQUIRED');
 if(!marketplace.businessDomainEmailConfigured) account.push('BUSINESS_DOMAIN_EMAIL_REQUIRED');
+if(!marketplace.developerSpacePublished) account.push('DEVELOPER_SPACE_PUBLISH_REQUIRED');
+if(!marketplace.distributionSharingEnabled) account.push('DISTRIBUTION_SHARING_REQUIRED');
+if(!marketplace.developerCommunityContactRegistered) account.push('DEVELOPER_COMMUNITY_CONTACT_REQUIRED');
 if(!marketplace.privacyUrl) account.push('PUBLIC_PRIVACY_URL_REQUIRED');
 if(!marketplace.supportUrl) account.push('PUBLIC_SUPPORT_URL_REQUIRED');
-if(!marketplace.termsUrl) account.push('PUBLIC_TERMS_URL_REQUIRED');
+if(marketplace.endUserTermsMode==='ATLASSIAN_STANDARD_AGREEMENT_PLANNED'&&!marketplace.standardAgreementSelected) account.push('STANDARD_EULA_SELECTION_REQUIRED');
+if(!marketplace.dpaLegalReviewComplete) account.push('DPA_LEGAL_REVIEW_REQUIRED');
 if(!marketplace.payoutAndTaxConfigured) account.push('PAYOUT_TAX_SETUP_REQUIRED');
 if(!marketplace.marketplacePricingConfigured) account.push('MARKETPLACE_PRICING_REQUIRED');
 if(!marketplace.listingAssetsComplete) account.push('LISTING_ASSETS_REQUIRED');
