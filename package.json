@@ -7,7 +7,8 @@
     "test": "node --test test/*.test.js",
     "check:scaffold": "node test/scaffold-check.js",
     "release:check": "node scripts/release-readiness.js",
-    "release:check:marketplace": "node scripts/release-readiness.js --marketplace"
+    "release:check:marketplace": "node scripts/release-readiness.js --marketplace",
+    "check:marketplace-copy": "node scripts/validate-marketplace-copy.js"
   },
   "dependencies": {
     "@forge/bridge": "^6.3.1",

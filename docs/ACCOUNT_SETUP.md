@@ -8,7 +8,10 @@ These items require the owner’s real business/account/legal information and ar
 2. Create a Marketplace Partner profile (formerly vendor profile).
 3. Use the real individual/business entity that will own and receive revenue from the app.
 4. Add an active private-domain business email. Paid-via-Atlassian submissions cannot use Gmail/Yahoo-style public domains.
-5. Ensure at least one Partner contact is registered with the Atlassian Developer Community.
+5. Complete Atlassian partner identity/business verification (KYB/KYC) using the real owner entity and primary-contact documents when Atlassian opens the verification ticket.
+6. Complete the Marketplace security questionnaire using evidence from the app's actual architecture and security controls.
+7. Complete the Marketplace Privacy & Security tab and obtain any required ticket approval before app review.
+8. Ensure at least one Partner contact is registered with the Atlassian Developer Community.
 
 ## Developer Space and distribution
 

@@ -1,7 +1,10 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "partnerProfileCreated": false,
   "partnerAgreementAccepted": false,
+  "partnerVerificationComplete": false,
+  "securityQuestionnaireComplete": false,
+  "privacySecurityTabApproved": false,
   "businessDomainEmailConfigured": true,
   "developerSpacePublished": false,
   "distributionSharingEnabled": false,
@@ -16,5 +19,6 @@
   "marketplacePricingConfigured": false,
   "listingCopyComplete": true,
   "listingAssetsComplete": false,
-  "reviewerPackageComplete": true
+  "reviewerPackageComplete": true,
+  "documentationUrl": "https://lumiprax.com/support/audit-policy-guard"
 }

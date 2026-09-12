@@ -29,18 +29,22 @@ if(privacy.staging?.status!=='PASS') technical.push('STAGING_PRIVACY_MIGRATION_N
 if(production.deployment!=='COMPLETE') technical.push('PRODUCTION_DEPLOYMENT_NOT_COMPLETE');
 if(production.currentDeploymentContainsPrivacySchemaV2!==true) technical.push('PRODUCTION_PRIVACY_BUILD_NOT_DEPLOYED');
 if(production.installation!=='NOT_INSTALLED_BY_DESIGN') technical.push('PRODUCTION_INSTALL_STATE_UNEXPECTED');
-for(const file of ['docs/PRIVACY.md','docs/SECURITY.md','docs/SUPPORT.md','docs/MARKETPLACE_LISTING.md','docs/REVIEWER_INSTRUCTIONS.md']) {
+for(const file of ['docs/PRIVACY.md','docs/SECURITY.md','docs/SUPPORT.md','docs/MARKETPLACE_LISTING.md','docs/REVIEWER_INSTRUCTIONS.md','docs/SECURITY_QUESTIONNAIRE.md','docs/PRIVACY_SECURITY_SUBMISSION.md']) {
   if(!fs.existsSync(path.join(root,file))) technical.push(`MISSING_${file.toUpperCase().replace(/[^A-Z0-9]+/g,'_')}`);
 }
 
 if(!marketplace.partnerProfileCreated) account.push('PARTNER_PROFILE_REQUIRED');
 if(!marketplace.partnerAgreementAccepted) account.push('PARTNER_AGREEMENT_REQUIRED');
+if(!marketplace.partnerVerificationComplete) account.push('PARTNER_VERIFICATION_REQUIRED');
+if(!marketplace.securityQuestionnaireComplete) account.push('SECURITY_QUESTIONNAIRE_REQUIRED');
+if(!marketplace.privacySecurityTabApproved) account.push('PRIVACY_SECURITY_TAB_APPROVAL_REQUIRED');
 if(!marketplace.businessDomainEmailConfigured) account.push('BUSINESS_DOMAIN_EMAIL_REQUIRED');
 if(!marketplace.developerSpacePublished) account.push('DEVELOPER_SPACE_PUBLISH_REQUIRED');
 if(!marketplace.distributionSharingEnabled) account.push('DISTRIBUTION_SHARING_REQUIRED');
 if(!marketplace.developerCommunityContactRegistered) account.push('DEVELOPER_COMMUNITY_CONTACT_REQUIRED');
 if(!marketplace.privacyUrl) account.push('PUBLIC_PRIVACY_URL_REQUIRED');
 if(!marketplace.supportUrl) account.push('PUBLIC_SUPPORT_URL_REQUIRED');
+if(!marketplace.documentationUrl) account.push('PUBLIC_DOCUMENTATION_URL_REQUIRED');
 if(marketplace.endUserTermsMode==='ATLASSIAN_STANDARD_AGREEMENT_PLANNED'&&!marketplace.standardAgreementSelected) account.push('STANDARD_EULA_SELECTION_REQUIRED');
 if(!marketplace.dpaLegalReviewComplete) account.push('DPA_LEGAL_REVIEW_REQUIRED');
 if(!marketplace.payoutAndTaxConfigured) account.push('PAYOUT_TAX_SETUP_REQUIRED');

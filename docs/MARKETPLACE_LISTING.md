@@ -53,7 +53,8 @@ Audit Policy Guard continuously evaluates Jira audit records and turns matching 
 **Support:** support@lumiprax.com  
 **Support URL:** https://lumiprax.com/support  
 **Privacy:** https://lumiprax.com/privacy  
-**Security contact:** security@lumiprax.com
+**Security contact:** security@lumiprax.com  
+**Documentation:** https://lumiprax.com/support/audit-policy-guard
 
 ## Pricing and evaluation
 
@@ -77,3 +78,12 @@ No separate third-party account is required.
 ## Limitations
 
 Coverage is limited to events exposed by Jira's audit records API. Audit Policy Guard cannot reconstruct events Jira does not record or expose. Production functionality requires an active Marketplace license; data deletion remains available to an authorized administrator even after licensing becomes inactive.
+
+
+## Release details
+
+**Release summary:** Initial release of Audit Policy Guard for Jira Cloud.
+
+**Documentation URL:** https://lumiprax.com/support/audit-policy-guard
+
+**Support status:** Supported by Lumiprax Technologies.
